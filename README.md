@@ -38,4 +38,9 @@ telnet localhost 44001
 ->Set a 10
 ```
 
+4. Close telnet
 
+```bash
+Ctrl + ]
+quit
+```
