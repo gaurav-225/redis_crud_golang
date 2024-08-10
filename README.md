@@ -1,34 +1,41 @@
-[![progress-banner](https://backend.codecrafters.io/progress/redis/f6004aaf-5cf6-480d-a505-86455b4e1b52)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+# Implemented based on task mentioned in https://app.codecrafters.io/catalog `Build Your Own Redis`
 
-This is a starting point for Go solutions to the
-["Build Your Own Redis" Challenge](https://codecrafters.io/challenges/redis).
+##### Tasks completed 
 
-In this challenge, you'll build a toy Redis clone that's capable of handling
-basic commands like `PING`, `SET` and `GET`. Along the way we'll learn about
-event loops, the Redis protocol and more.
+1. Added support for the ECHO, PING, SET & GET commands.
+2. Added support for setting a key with an expiry.
+3. Propagating write commands from a master to a replica.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
 
-# Passing the first stage
 
-The entry point for your Redis implementation is in `app/server.go`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
+## Bash Commands to run 
 
-```sh
-git add .
-git commit -m "pass 1st stage" # any msg
-git push origin master
+1. Start Master Server
+```bash
+go run app/server.go -port 44001
 ```
 
-That's all!
+2. Start Replica server for Master running on port 44001
 
-# Stage 2 & beyond
+```bash
+go run app/server.go -port 44002 -replicaof "localhost 44001"
 
-Note: This section is for stages 2 and beyond.
+#-----------------------------In case of error
+# to store log in file
+go run app/server.go -port 44002 -replicaof "localhost 44001" | tee resultCheckWhyOccur
 
-1. Ensure you have `go (1.19)` installed locally
-1. Run `./spawn_redis_server.sh` to run your Redis server, which is implemented
-   in `app/server.go`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+# to store error and log in file
+(go run app/server.go -port 44002 -replicaof "localhost 44001") 2>&1 | tee resultCheckWhyOccur2
+```
+
+
+3. Using telnet to commuicate with Server
+
+```bash
+telnet localhost 44002
+telnet localhost 44001
+->Get a
+->Set a 10
+```
+
+
